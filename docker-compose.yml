@@ -1,0 +1,85 @@
+version: '3.8'
+
+x-common-env: &common-env
+  JWT_SECRET: "esta_es_mi_compleja_clave_secreta_foodtruck_2026"
+  SPRING_DATASOURCE_USERNAME: root
+  SPRING_DATASOURCE_PASSWORD: ""
+
+services:
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "9090:9090"
+    depends_on:
+      - auth-service
+      - usuarios-service
+      - pagos-service
+      - pedidos-service
+      - productos-service
+      - almacen-service
+      - envios-service
+    restart: on-failure
+
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "9096:9096"
+    environment:
+      <<: *common-env
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/bd_auth?createDatabaseIfNotExist=true
+    restart: on-failure
+
+  usuarios-service:
+    build: ./usuarios-service/usuarios-service
+    ports:
+      - "9094:9094"
+    environment:
+      <<: *common-env
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/bd_usuarios?createDatabaseIfNotExist=true
+    restart: on-failure
+
+  pagos-service:
+    build: ./pagos-service
+    ports:
+      - "9093:9093"
+    environment:
+      <<: *common-env
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/bd_pagos?createDatabaseIfNotExist=true
+    restart: on-failure
+
+  pedidos-service:
+    build: ./pedidos-service
+    ports:
+      - "9092:9092"
+    environment:
+      <<: *common-env
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/bd_pedidos?createDatabaseIfNotExist=true
+    restart: on-failure
+
+  productos-service:
+    build: ./productos-service
+    ports:
+      - "9095:9095"
+    environment:
+      <<: *common-env
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/bd_productos?createDatabaseIfNotExist=true
+    restart: on-failure
+
+  almacen-service:
+    build: ./almacen-service
+    ports:
+      - "9091:9091"
+    environment:
+      <<: *common-env
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/bd_almacen?createDatabaseIfNotExist=true
+    restart: on-failure
+
+  envios-service:
+    build: ./envios-service
+    ports:
+      - "9097:9097"
+    environment:
+      <<: *common-env
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/bd_envios?createDatabaseIfNotExist=true
+    restart: on-failure
