@@ -1,17 +1,32 @@
+@echo off
 cd api-gateway
 call .\mvnw clean
+cd ..
 
-cd ../auth-service
+cd auth-service
 call .\mvnw clean
+cd ..
 
-cd ../cliente-service
+cd usuarios-service\usuarios-service
 call .\mvnw clean
+cd ..\..
 
-cd ../compra-service
-call  .\mvnw clean
-
-cd ../producto-service
+cd pagos-service
 call .\mvnw clean
+cd ..
 
-cd ../pago-service
+cd pedidos-service
 call .\mvnw clean
+cd ..
+
+cd productos-service
+call .\mvnw clean
+cd ..
+
+cd almacen-service
+call .\mvnw clean
+cd ..
+
+cd envios-service
+call .\mvnw clean
+cd ..

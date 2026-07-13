@@ -1,21 +1,35 @@
-rem $env:DOCKER_BUILDKIT=0
-rem docker rm -f $(docker ps -aq)
+@echo off
 FOR /f %%i IN ('docker ps -aq') DO docker rm -f %%i
 FOR /f %%i IN ('docker images -aq') DO docker rmi -f %%i
+
 cd api-gateway
 call .\mvnw clean package -DskipTests
+cd ..
 
-cd ../auth-service
+cd auth-service
 call .\mvnw clean package -DskipTests
+cd ..
 
-cd ../cliente-service
+cd usuarios-service\usuarios-service
 call .\mvnw clean package -DskipTests
+cd ..\..
 
-cd ../compra-service
-call  .\mvnw clean package -DskipTests
-
-cd ../producto-service
+cd pagos-service
 call .\mvnw clean package -DskipTests
+cd ..
 
-cd ../pago-service
+cd pedidos-service
 call .\mvnw clean package -DskipTests
+cd ..
+
+cd productos-service
+call .\mvnw clean package -DskipTests
+cd ..
+
+cd almacen-service
+call .\mvnw clean package -DskipTests
+cd ..
+
+cd envios-service
+call .\mvnw clean package -DskipTests
+cd ..
